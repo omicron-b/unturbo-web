@@ -22,7 +22,7 @@ if ( isset($_POST['textarea1']) ) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Un-Turbo</title>
+    <title>Un-Turbo: возвращаем ссылкам исходный вид</title>
     <link rel="shortcut icon" href="favicon.png">
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <!--
@@ -68,6 +68,7 @@ if ( isset($_POST['textarea1']) ) {
       <div class="row">
         <div class="col-6">
           <?php
+              // We got the URL and cleaned it
               if ( isset($_SESSION['unturbo_clean_url']) ) {
                 echo '<div class="alert alert-success mt-2">';
                   echo 'Оригинальный URL:<br><strong>';
@@ -87,6 +88,7 @@ if ( isset($_POST['textarea1']) ) {
                 echo '</div>';
                 session_unset();
               }
+              // Could not find a valid URL
               if ( $_SESSION['error'] == 'Invalid URL' ) {
                 echo '<div class="alert alert-danger mt-2">';
                   echo 'Хмм... <strong>Турбо-страница не найдена. </strong>';
@@ -119,11 +121,10 @@ if ( isset($_POST['textarea1']) ) {
           специальными значками с ракетой.</blockquote>
         </p>
         <p><strong>Почему стоит игнорировать такие страницы?</strong></br>
-          <div class="alert alert-warning" role="alert">По аналогии с технологией AMP от Google, страницы с технологией Турбо получают 
-          преференции в поисковой выдаче. Это угрожает свободе интернета в целом и качеству материала, доступного пользователям, в частности. 
-          Вы получаете в выдаче не более популярный и более качественный сайт, а сайт, подключивший некую технологию от поисковика и 
-          (чаще всего) позволивший встроить туда рекламу от поисковика.</br>
-          Иными словами, эта технология ухудшает конкуренцию и, следовательно, вредит пользователям.
+          <div class="alert alert-warning" role="alert">По аналогии с AMP от Google, страницы с технологией Турбо получают преференции в поисковой 
+          выдаче. Это угрожает свободе интернета в целом и качеству материала, доступного пользователям, в частности. Вы получаете в выдаче не 
+          более популярный и более интересный сайт, а сайт, подключивший некую технологию от поисковика и (чаще всего) позволивший встроить туда 
+          рекламу.</br>Иными словами, это ухудшает конкуренцию и, следовательно, вредит пользователям.
           </div>
         </p>
         <p><strong>Что это значит лично для меня?</strong>
