@@ -3,13 +3,35 @@ session_start();
 
 // Validate data when it is present
 if ( isset($_POST['textarea1']) ) {
-  if ( strpos($_POST['textarea1'],'yandex.ru/turbo/s/') === false ) {
+  if ( strpos($_POST['textarea1'], 'yandex.ru/turbo') === false ) {
     $_SESSION['error'] = 'Invalid URL';
     header("Location: index.php");
     return;
   }
-  // Clean URL on the left side
-  $unturbo_half_clean_url = str_ireplace('yandex.ru/turbo/s/','',$_POST['textarea1']);
+  // Find the type of the turbo page
+  if ( strpos($_POST['textarea1'], 'yandex.ru/turbo/s/') > 0 ) {
+    // Type 1: https://yandex.ru/turbo/s/<original-URL>?<tracking-params>
+    // Clean URL on the left side
+    $unturbo_half_clean_url = str_ireplace('yandex.ru/turbo/s/', '', $_POST['textarea1']);
+  }
+  elseif ( strpos($_POST['textarea1'], 'yandex.ru/turbo/') > 0 and strpos($_POST['textarea1'], '/s/') > 0 ) {
+    // Type 2: https://yandex.ru/turbo/<original-hostname>/s/<original-document>?<tracking-params>
+    // Convert URL
+    $unturbo_search = array('yandex.ru/turbo/', '/s/');
+    $unturbo_replace = array('', '/');
+    $unturbo_half_clean_url = str_ireplace($unturbo_search, $unturbo_replace, $_POST['textarea1']);
+  }
+  elseif ( strpos($_POST['textarea1'], 'https://yandex.ru/turbo?text=') > 0 ) {
+    // Type 3 (mobile): https://yandex.ru/turbo?text=<encoded-URL>
+    $unturbo_half_clean_url = urldecode(str_ireplace('https://yandex.ru/turbo?text=', '', $_POST['textarea1']));
+  }
+  else {
+    // Unknown URL type
+    $_SESSION['error'] = 'Invalid URL';
+    header("Location: index.php");
+    return;
+  }
+  // Regardless of type:
   // Clean URL on the right side: remove all GET params
   $_SESSION['unturbo_clean_url'] = preg_replace('/\?.*/', '', $unturbo_half_clean_url);
   header("Location: index.php");
@@ -106,7 +128,7 @@ if ( isset($_POST['textarea1']) ) {
               <div class="form-group">
                 <legend>Un-Turbo: возвращаем ссылкам исходный вид</legend>
                 <label class="sr-only" for="textarea1">Введите ссылку для нормализации</label>
-                <textarea class="form-control" name="textarea1" id="textarea1" rows="6" placeholder="https://yandex.ru/turbo/s/..."></textarea>
+                <textarea class="form-control" name="textarea1" id="textarea1" rows="6" placeholder="https://yandex.ru/turbo..."></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Очистить URL</button>
             </form>
