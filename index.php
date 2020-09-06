@@ -92,7 +92,7 @@ if ( isset($_POST['textarea1']) ) {
               if ( $_SESSION['error'] == 'Invalid URL' ) {
                 echo '<div class="alert alert-danger mt-2">';
                   echo 'Хмм... <strong>Турбо-страница не найдена. </strong>';
-                  echo 'Если вы уверены, что URL ссылается на Турбо-страницу, <a href="https://github.com/omicron-b/unturbo-web/issues" rel="noopener noreferrer">сообщите об ошибке</a>';
+                  echo 'Если вы уверены, что URL ссылается на Турбо-страницу, <a href="https://github.com/omicron-b/unturbo-web/issues" target="_blank" rel="noopener noreferrer">сообщите об ошибке</a>';
                 echo '</div>';
                 session_unset();
               }
@@ -110,6 +110,12 @@ if ( isset($_POST['textarea1']) ) {
               </div>
               <button type="submit" class="btn btn-primary">Очистить URL</button>
             </form>
+            <div style="padding-top: 20px;">
+              <a href="https://addons.mozilla.org/en-US/firefox/addon/redirect-yandex-turbo-to-html/" target="_blank" rel="noopener noreferrer">
+                <img src="get-the-addon-fx-apr-2020.svg" width="40%" atl="Скачать дополнение для Firefox" style="float: right;">
+              </a>
+              <legend style="text-align: right; float: right;">Скачать дополнение для Firefox</legend>
+            </div>
           </div>
         </div>
         <div class="col-6">
