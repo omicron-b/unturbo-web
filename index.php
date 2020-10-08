@@ -135,8 +135,14 @@ if ( isset($_POST['textarea1']) ) {
             <div style="padding-top: 20px;">
               <a href="https://addons.mozilla.org/en-US/firefox/addon/redirect-yandex-turbo-to-html/" target="_blank" rel="noopener noreferrer">
                 <img src="get-the-addon-fx-apr-2020.svg" width="40%" atl="Скачать дополнение для Firefox" style="float: right;">
-              </a>
               <legend style="text-align: right; float: right;">Скачать дополнение для Firefox</legend>
+              </a>
+            </div>
+            <div style="padding-top: 20px;">
+              <a href="https://chrome.google.com/webstore/detail/redirect-yandex-turbo-to/kpgdfgegabcmlepnikjmcanmlpakgjda" target="_blank" rel="noopener noreferrer">
+                <!--<img src="get-the-addon-fx-apr-2020.svg" width="40%" atl="Скачать дополнение для Firefox" style="float: right;">-->
+              <legend style="text-align: right; float: right;">Скачать дополнение для Chrome / Chromium</legend>
+              </a>
             </div>
           </div>
         </div>
