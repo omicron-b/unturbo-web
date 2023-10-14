@@ -3,7 +3,8 @@ session_start();
 
 // Validate data when it is present
 if ( isset($_POST['textarea1']) ) {
-  if ( strpos($_POST['textarea1'], 'yandex.ru/turbo') === false ) {
+  if ( strpos($_POST['textarea1'], 'yandex.ru/turbo') === false and
+       strpos($_POST['textarea1'], 'turbopages') === false ) {
     $_SESSION['error'] = 'Invalid URL';
     header("Location: index.php");
     return;
@@ -24,6 +25,12 @@ if ( isset($_POST['textarea1']) ) {
   elseif ( strpos($_POST['textarea1'], 'https://yandex.ru/turbo?text=') > 0 ) {
     // Type 3 (mobile): https://yandex.ru/turbo?text=<encoded-URL>
     $unturbo_half_clean_url = urldecode(str_ireplace('https://yandex.ru/turbo?text=', '', $_POST['textarea1']));
+  }
+  elseif ( strpos($_POST['textarea1'], 'turbopages.org/') > 0 ) {
+    // Type 4 : https://<some-domain>.turbopages.org/[turbo/]<original-hostname>/s/<original-document>?<tracking-params>
+    $unturbo_search = array('/^.*turbopages\.org\//', '/turbo\//', '/\/s\//');
+    $unturbo_replace = array('https://', '', '/');
+    $unturbo_half_clean_url = urldecode(preg_replace($unturbo_search, $unturbo_replace, $_POST['textarea1'], 1));
   }
   else {
     // Unknown URL type
@@ -128,7 +135,7 @@ if ( isset($_POST['textarea1']) ) {
               <div class="form-group">
                 <legend>Un-Turbo: возвращаем ссылкам исходный вид</legend>
                 <label class="sr-only" for="textarea1">Введите ссылку для нормализации</label>
-                <textarea class="form-control" name="textarea1" id="textarea1" rows="6" placeholder="https://yandex.ru/turbo..."></textarea>
+                <textarea class="form-control" name="textarea1" id="textarea1" rows="6" placeholder="https://...turbopages.org/..."></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Очистить URL</button>
             </form>
