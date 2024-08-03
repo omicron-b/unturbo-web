@@ -22,7 +22,7 @@ if ( isset($_POST['textarea1']) ) {
     $unturbo_replace = array('', '/');
     $unturbo_half_clean_url = str_ireplace($unturbo_search, $unturbo_replace, $_POST['textarea1']);
   }
-  elseif ( strpos($_POST['textarea1'], 'https://yandex.ru/turbo?text=') > 0 ) {
+  elseif ( strpos($_POST['textarea1'], 'yandex.ru/turbo?text=') > 0 ) {
     // Type 3 (mobile): https://yandex.ru/turbo?text=<encoded-URL>
     $unturbo_half_clean_url = urldecode(str_ireplace('https://yandex.ru/turbo?text=', '', $_POST['textarea1']));
   }
